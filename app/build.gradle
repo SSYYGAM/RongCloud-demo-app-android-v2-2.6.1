@@ -1,0 +1,61 @@
+apply plugin: 'com.android.application'
+apply plugin: 'com.google.gms.google-services'
+android {
+    compileSdkVersion 23
+    buildToolsVersion "23.0.3"
+    useLibrary 'org.apache.http.legacy'
+
+    defaultConfig {
+        applicationId "io.rong.app"
+        minSdkVersion 9
+        targetSdkVersion 23
+        versionCode 2016053022
+        versionName "2.6.1 Dev"
+    }
+
+    signingConfigs {
+        config {
+            storeFile file("rong.key")
+            storePassword "Amigo123"
+            keyAlias "RongCloud"
+            keyPassword "Amigo123"
+        }
+    }
+    sourceSets {
+        main {
+            jni.srcDirs = []
+            jniLibs.srcDirs = ['src/main/libs']
+        }
+    }
+    packagingOptions {
+        exclude 'AndroidManifest.xml'
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            signingConfig signingConfigs.config //for release
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+        debug {
+            minifyEnabled false
+        }
+    }
+
+
+
+    lintOptions {
+        checkReleaseBuilds false
+
+        abortOnError false
+    }
+}
+dependencies {
+    compile fileTree(dir: 'src/main/libs', include: ['*.jar'])
+    compile 'com.android.support:appcompat-v7:19.1.0'
+    compile project(':IMKit')
+    compile 'com.squareup.picasso:picasso:2.4.0'
+    compile files('src/main/libs/TencentLocationSDK_v4.4.6_r206631_151119_1441.jar')
+    compile files('src/main/libs/TencentMapSDK_Raster_v1.1.2.16281.jar')
+    compile files('src/main/libs/MiPush_SDK_Client_2_2_21.jar')
+}
